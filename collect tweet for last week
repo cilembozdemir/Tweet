@@ -1,0 +1,27 @@
+import tweepy
+import sys
+import os
+import codecs
+
+CONSUMER_KEY =""
+CONSUMER_SECRET = ""
+ACCESS_TOKEN = ""
+ACCESS_TOKEN_SECRET = ""
+
+auth = tweepy.OAuthHandler(CONSUMER_KEY,CONSUMER_SECRET)
+auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+
+api = tweepy.API(auth, wait_on_rate_limit=True)
+
+f = codecs.open("C:\\Users\\didar\\Pictures\\sexism102.txt", "w")
+
+for tweet in tweepy.Cursor(api.search,
+                            q="sexism",
+                            since="2021-08-24",
+                            until="2021-08-31",
+                            lang="en").items():
+    try:
+        print (tweet.created_at, tweet.text)
+        f.write(tweet.text)
+    except:
+        pass
